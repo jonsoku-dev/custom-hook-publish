@@ -20,11 +20,12 @@
     "start": "rollup -c -w",
     "prepare": "yarn run build",
     "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build"
+    "deploy": "gh-pages -d example/build",
+    "postpublish": "git push --tags"
   },
   "dependencies": {},
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": ">=18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
@@ -46,5 +47,8 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
