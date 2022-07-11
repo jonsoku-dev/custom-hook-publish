@@ -1,23 +1,23 @@
-import * as React from 'react';
+import { useEffect, useState } from "react";
 
-export const useMyHook = () => {
-  let [{
-    counter
-  }, setState] = React.useState<{
-    counter: number;
-  }>({
-    counter: 0
-  });
+export const useStarWarsQuote = () => {
+  const [quote, setQuote] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  React.useEffect(() => {
-    let interval = window.setInterval(() => {
-      counter++;
-      setState({counter})
-    }, 1000)
-    return () => {
-      window.clearInterval(interval);
-    };
+  useEffect(() => {
+    async function getStarWarsQuote() {
+      setLoading(true);
+      // Get initial text
+      const response = await fetch(
+        "https://starwars-quote-proxy-gi0d3x1lz.now.sh/api/randomQuote"
+      );
+      const data = await response.json();
+      const quote = data.starWarsQuote;
+      setQuote(quote);
+      setLoading(false);
+    }
+    getStarWarsQuote();
   }, []);
 
-  return counter;
+  return { quote, loading };
 };

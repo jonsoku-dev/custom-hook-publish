@@ -1,29 +1,28 @@
-import { useMyHook } from './'
-import { renderHook, act } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react-hooks";
+import { useStarWarsQuote } from "./";
 
-// mock timer using jest
-jest.useFakeTimers();
+describe("useStarWarsQuote", () => {
+  test("should return an object with the keys: loading, quote", () => {
+    // result.current = the value returned by our hook
+    const { result } = renderHook(() => useStarWarsQuote());
 
-describe('useMyHook', () => {
-  it('updates every second', () => {
-    const { result } = renderHook(() => useMyHook());
+    expect(result.current).toHaveProperty("loading");
+    expect(result.current).toHaveProperty("quote");
+  });
 
-    expect(result.current).toBe(0);
+  test("should set loading to true after initial call", () => {
+    const { result } = renderHook(() => useStarWarsQuote());
+    expect(result.current.loading).toBe(true);
+  });
 
-    // Fast-forward 1sec
-    act(() => {
-      jest.advanceTimersByTime(1000);
-    });
+  test("should return a quote and set loading to false", async () => {
+    // Add test here
+    const { result, waitForNextUpdate } = renderHook(() => useStarWarsQuote());
 
-    // Check after total 1 sec
-    expect(result.current).toBe(1);
-
-    // Fast-forward 1 more sec
-    act(() => {
-      jest.advanceTimersByTime(1000);
-    });
-
-    // Check after total 2 sec
-    expect(result.current).toBe(2);
-  })
-})
+    await waitForNextUpdate();
+    expect(typeof result.current.quote).toBe("string");
+    expect(result.current.quote).not.toBe(null);
+    expect(result.current.quote).not.toBe("");
+    expect(result.current.loading).toBe(false);
+  });
+});
