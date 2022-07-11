@@ -1,8 +1,8 @@
 {
-  "name": "@jonsoku2/use-star-wars-quote",
+  "name": "@jongseok.lee/use-star-wars-quote",
   "version": "1.0.0",
   "description": "I don&#x27;t know this custom hook w",
-  "author": "jonsoku2",
+  "author": "jongseok.lee",
   "license": "MIT",
   "repository": "jonsoku2/@jonsoku2/use-star-wars-quote",
   "main": "dist/index.js",
